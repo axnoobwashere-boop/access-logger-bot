@@ -81,4 +81,4 @@ async def access(interaction: discord.Interaction):
     )
     await interaction.response.send_message(embed=embed)
 
-bot.run(MTUxMDMxOTM3NDUyNjA1ODQ5Ng.GNMhC_.EOxWQvi-HEGZ5MuUgvGgkEjD4eCfY_ykXoKP5U)
+bot.run(TOKEN)
