@@ -69,6 +69,16 @@ async def addaccess(interaction: discord.Interaction, minutes: int):
     )
     await interaction.response.send_message(embed=embed)
 
+@tree.command(name="clearaccess", description="Reset your Roblox access totals")
+async def clearaccess(interaction: discord.Interaction):
+    data = load_data()
+    data["weekly"] = 0
+    data["monthly"] = 0
+    save_data(data)
+    embed = discord.Embed(color=0x5865F2)
+    embed.description = "Access totals have been reset. ✅\nTotal Weekly Access = 0 hours 0 minutes ✅\nTotal Monthly Access = 0 hours 0 minutes ✅"
+    await interaction.response.send_message(embed=embed)
+
 @tree.command(name="access", description="Check your Roblox playtime totals")
 async def access(interaction: discord.Interaction):
     data = load_data()
