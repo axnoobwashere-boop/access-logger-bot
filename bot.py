@@ -53,19 +53,22 @@ async def on_ready():
     await tree.sync()
     print(f"Logged in as {bot.user}")
 
-@tree.command(name="addaccess", description="Add minutes to your Roblox access totals")
-@app_commands.describe(minutes="How many minutes to add")
-async def addaccess(interaction: discord.Interaction, minutes: int):
+@tree.command(name="addaccess", description="Add time to your Roblox access totals")
+@app_commands.describe(hours="How many hours to add", minutes="How many minutes to add")
+async def addaccess(interaction: discord.Interaction, hours: int = 0, minutes: int = 0):
     data = load_data()
     data = maybe_reset(data)
-    data["weekly"] += minutes
-    data["monthly"] += minutes
+    total = (hours * 60) + minutes
+    data["weekly"] += total
+    data["monthly"] += total
     save_data(data)
     embed = discord.Embed(color=0x5865F2)
     embed.description = (
-        f"Added {minutes} minute{'s' if minutes != 1 else ''} to both access totals.\n"
+        f"Added {hours}h {minutes}m to both access totals.\n"
         f"Total Weekly Access = {format_time(data['weekly'])} ✅\n"
         f"Total Monthly Access = {format_time(data['monthly'])} ✅"
+    )
+    await interaction.response.send_message(embed=embed)
     )
     await interaction.response.send_message(embed=embed)
 
